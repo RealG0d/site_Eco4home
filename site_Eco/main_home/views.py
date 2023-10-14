@@ -8,3 +8,6 @@ def tests(request):
 
 def catalog(request):
     return render(request, 'main_site/catalog.html')
+
+def actions(request):
+    return render(request, 'main_site/stocks.html')
