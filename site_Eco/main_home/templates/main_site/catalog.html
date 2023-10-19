@@ -28,9 +28,19 @@
 		<p>Тут вы можете выбрать домашние растения и аксессуары для них</p>
 	</header>
 	<section class="wrapper style5">
+		<div id="category-select">
+		  <select id="category">
+			<option value="all">Все категории</option>
+			<option value="Вид">Электроника</option>
+			<option value="Растеневидное">Одежда</option>
+			<option value="Обыкновенный кактус">Книги</option>
+		  </select>
+		</div>
+
+		<div id="products">
 		<div id='card' class="cards">
 			{% for item in items %}
-			<div class="card">
+			<div class="card" data-category="{{ item.type_plant }}">
 				<div class="card__top">
 					<a href="#" class="card__image">
 						<img src="{{ item.img_plant.url }}" alt="{{ item.name_plant }}">
@@ -57,115 +67,8 @@
 			</div>
 			{% endfor %}
 		</div>
+		</div>
 			<button id="loadMoreButton" class="button__fit">Показать еще</button>
 	</section>
 </article>
-<script>
-var currentPage = 2;
-var loadMoreButton = document.getElementById('loadMoreButton');
-var dataContainer = document.getElementById('card');
-var hasMoreItems = true;
-
-loadMoreButton.addEventListener('click', function() {
-if (!hasMoreItems) {
-		loadMoreButton.style.display = 'none'; // Hide the button
-		return;
-	}
-
-	var xhr = new XMLHttpRequest();
-	var url = '/load-more-data/?page=' + currentPage;
-
-	xhr.open('GET', url);
-	xhr.onload = function() {
-		if (xhr.status === 200) {
-			var responseData = JSON.parse(xhr.responseText);
-
-			for (var i = 0; i < responseData.length; i++) {
-				var newItem = document.createElement('div');
-				newItem.className = 'card';
-
-				var cardTop = document.createElement('div');
-				cardTop.className = 'card__top';
-
-				var imageLink = document.createElement('a');
-				imageLink.className = 'card__image';
-				imageLink.href = '#';
-
-				var image = document.createElement('img');
-				image.src = "/E:/media/" + responseData[i].img_plant;
-				image.alt = responseData[i].name_plant;
-
-				imageLink.appendChild(image);
-				cardTop.appendChild(imageLink);
-
-				if(responseData[i].sale_plant !== 0){
-					var cardLabel = document.createElement('div');
-					cardLabel.className = 'card__label';
-					cardLabel.textContent = responseData[i].sale_plant + '%';
-
-					cardTop.appendChild(cardLabel);
-				}
-
-				newItem.appendChild(cardTop);
-
-				var cardBottom = document.createElement('div');
-				cardBottom.className = 'card__bottom';
-
-				var titleLink = document.createElement('a');
-				titleLink.className = 'card__title';
-				titleLink.href = '#';
-				titleLink.textContent = responseData[i].name_plant;
-
-				var type = document.createElement('h7');
-				type.textContent = responseData[i].type_plant;
-
-				var cardPrices = document.createElement('div');
-				cardPrices.className = 'card__prices';
-
-				if(responseData[i].sale_plant !== 0){
-					var priceDiscount = document.createElement('div');
-					priceDiscount.className = 'card__price card__price--discount';
-					priceDiscount.textContent = Math.floor(responseData[i].price_plant * (100 - responseData[i].sale_plant) / 100);
-
-					cardPrices.appendChild(priceDiscount);
-				} else {
-					var price = document.createElement('div');
-					price.className = 'card__price card__price--discount';
-					price.textContent = responseData[i].price_plant;
-
-					cardPrices.appendChild(price);
-				}
-
-				var addToCartLink = document.createElement('a');
-				addToCartLink.className = 'card__add';
-				addToCartLink.href = '#';
-				addToCartLink.textContent = 'В корзину';
-
-				cardBottom.appendChild(titleLink);
-				cardBottom.appendChild(type);
-				cardBottom.appendChild(cardPrices);
-				cardBottom.appendChild(addToCartLink);
-
-				newItem.appendChild(cardBottom);
-
-				dataContainer.appendChild(newItem);
-			}
-
-			currentPage++;
-
-			if (responseData.length < 4) {
-                    hasMoreItems = false; // Нет больше элементов
-            }
-
-			if (!hasMoreItems) {
-            	loadMoreButton.style.display = 'none'; // Скрыть кнопку
-        	}
-
-		}
-
-	};
-
-	xhr.send();
-});
-</script>
 {% endblock %}
