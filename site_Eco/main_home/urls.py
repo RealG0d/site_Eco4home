@@ -10,4 +10,5 @@ urlpatterns = [
     path('catalog/', PlantsListView.as_view(), name='catalog'),
     path('load-more-data/', load_more_data, name='load-more-data'),
     path('stocks/', views.actions, name='actions'),
+    path('result/', views.result_quiz, name='results')
 ]

@@ -4312,3 +4312,8 @@ input, select, textarea {
         }
     }
 
+.center__format {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}

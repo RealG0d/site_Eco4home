@@ -1,0 +1,46 @@
+{% extends 'main_site/layout.html' %}
+
+{% block section_one %}
+<article id="main">
+	<header>
+		<h2>Результаты тестирования</h2>
+		<p>Тут вы можете узнать какие домашние растения подходят именно вам!</p>
+	</header>
+	<section class="wrapper style5">
+		<div class="inner">
+			<div class="center__format">
+				<h3>Мы считаем что вам подходят данные растения</h3>
+			</div>
+			<div id='cards' class="cards">
+				{% for plant in good_plants %}
+				<div class="card" data-category="{{ plant.type_plant }}">
+					<div id="card-{{ plant.name_plant }}" class="card__top">
+						<a href="#" class="card__image">
+							<img src="{{ plant.img_plant.url }}" alt="{{ plant.name_plant }}">
+						</a>
+						{% if plant.sale_plant != 0 %}
+						<div class="card__label">{{ plant.sale_plant }}%</div>
+						{% endif %}
+					</div>
+					<div class="card__bottom">
+						<a href="#" class="card__title">
+							{{ plant.name_plant }}
+						</a>
+						<h7>{{ plant.type_plant }}</h7>
+						<div class="card__prices">
+							{% if plant.sale_plant != 0 %}
+							<div class="card__price card__price--discount">{{ plant.get_sale }}</div>
+							{% endif %}
+							{% if plant.sale_plant == 0 %}
+							<div class="card__price card__price--discount">{{ plant.price_plant }}</div>
+							{% endif %}
+						</div>
+						<a href="#" class="card__add">В корзину</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+</article>
+{% endblock %}

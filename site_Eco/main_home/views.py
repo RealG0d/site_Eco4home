@@ -57,25 +57,36 @@ def quiz_view(request, quiz_id):
     if request.method == 'POST':
         form = QuizForm(request.POST, questions=questions)
         if form.is_valid():
+            category = ''
             qes_1, qes_2, qes_3 = 0, 0, 0
-            score = 0
             for question in questions:
                 selected_answer_id = form.cleaned_data[f'question_{question.id}']
                 selected_answer = Answer.objects.get(pk=selected_answer_id)
                 if selected_answer.score_ans == 1:
                     qes_1 += 1
-                if selected_answer.score_ans == 2:
+                elif selected_answer.score_ans == 2:
                     qes_2 += 1
-                if selected_answer.score_ans == 3:
+                else:
                     qes_3 += 1
+
             if qes_1 >= 1 or qes_3 >= 1:
-                # Тут результат только с безопасными растениями
-                return redirect('catalog')
-            elif qes_2 > 1:
-                # Тут результат с любыми растениями
-                return redirect('home_page')
+                category = 'Декоративно-лиственные растения'
+            elif qes_2 == 2:
+                category = 'Кактусы и суккуленты'
+
+            return result_quiz(request, category)
 
     else:
         form = QuizForm(questions=questions)
 
     return render(request, 'main_site/test.html', {'quiz': quiz, 'form': form, 'questions': questions})
+
+def result_quiz(request, category):
+    if category == 'Декоративно-лиственные растения':
+        good_plants = Plant.objects.filter(type_plant=category)
+    elif category == 'Кактусы и суккуленты':
+        good_plants = Plant.objects.filter(type_plant=category)
+    else:
+        good_plants = Plant.objects.all()
+
+    return render(request, 'main_site/result.html', {'good_plants': good_plants})
