@@ -1,33 +1,12 @@
 {% extends 'main_site/layout.html' %}
 
-{% block header %}
-<header id="header" class="alt">
-<h1><a href="">Eco4home</a></h1>
-<nav id="nav">
-	<ul>
-		<li class="special">
-			<a href="#menu" class="menuToggle"><span>Меню</span></a>
-			<div id="menu">
-				<ul>
-					<li><a href="">Главная</a></li>
-					<li><a href="tests">Тесты</a></li>
-					<li><a href="catalog">Каталог</a></li>
-                    <li><a href="stocks">Товары дня</a></li>
-				</ul>
-			</div>
-		</li>
-	</ul>
-</nav>
-</header>
-{% endblock %}
-
 {% block banner %}
 <section id="banner">
     <div class="inner">
         <h2>Eco4home</h2>
         <p>Подбор домашних декоративных растений<br /></p>
         <ul class="actions special">
-            <li><a href="tests" class="button primary">Пройти тест</a></li>
+            <li><a href="{% url 'individual_tests' %}" class="button primary">Пройти тест</a></li>
         </ul>
     </div>
     <a href="#one" class="more scrolly">Узнать подробнее</a>
@@ -65,7 +44,7 @@
             <h2>Индивидуальный тест по подбору домашнего растения</h2>
             <p>Пройдите небольшой опрос и мы подберем для вас идеальный вариат домашнего растения.</p>
             <ul class="actions special">
-                <li><a href="tests" class="button fit">Пройти тест</a></li>
+                <li><a href="{% url 'individual_tests' %}" class="button fit">Пройти тест</a></li>
             </ul>
         </div>
     </section>
@@ -75,7 +54,7 @@
             и аксессуаров</h2>
             <p>Мы можем предложить вам более 300 видов домашних растений и аксессуаров для них, в том числе из-за рубежа.</p>
             <ul class="actions special">
-                <li><a href="catalog" class="button fit">Перейти в каталог</a></li>
+                <li><a href="{% url 'catalog' %}" class="button fit">Перейти в каталог</a></li>
             </ul>
         </div>
     </section>
@@ -84,7 +63,7 @@
             <h2>Акционные товары</h2>
             <p>В нашем магазине имеются специальные предложения на интересные виды домашних растений, взгляните.</p>
             <ul class="actions special">
-                <li><a href="stocks" class="button fit">Посмотреть скидки</a></li>
+                <li><a href="{% url 'actions' %}" class="button fit">Посмотреть скидки</a></li>
             </ul>
         </div>
     </section>
@@ -135,8 +114,8 @@
             <p>Мы предлагаем вам широкий выбор домашних растений под любой стиль вашего помещения.</p>
         </header>
         <ul class="actions stacked">
-            <li><a href="catalog" class="button fit primary">Каталог</a></li>
-            <li><a href="tests" class="button fit">Пройти тест</a></li>
+            <li><a href="{% url 'catalog' %}" class="button fit primary">Каталог</a></li>
+            <li><a href="{% url 'individual_tests' %}" class="button fit">Пройти тест</a></li>
         </ul>
     </div>
 </section>

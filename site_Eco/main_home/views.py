@@ -1,22 +1,25 @@
-import json
-
-from django.core import serializers
-from django.shortcuts import render
-from .models import Plant
+from django.shortcuts import render, redirect
+from .models import *
 from django.views.generic import ListView
 from django.core.paginator import Paginator
+from .forms import QuizForm
 
 from django.http import JsonResponse
+
 
 def home(request):
     return render(request, 'main_site/index.html')
 
 def tests(request):
-    return render(request, 'main_site/tests.html')
+    tests = Quiz.objects.all()
+    context = {
+        'tests': tests,
+    }
+    return render(request, 'main_site/tests.html', context=context)
 
 def catalog(request):
     items = Plant.objects.all()
-    paginator = Paginator(items, 2)
+    paginator = Paginator(items, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -29,12 +32,12 @@ class PlantsListView(ListView):
     model = Plant
     template_name = 'main_site/catalog.html'
     context_object_name = 'items'
-    paginate_by = 4
+    paginate_by = 5
 
 
 def load_more_data(request):
     page = request.GET.get('page', 1)
-    items_per_page = 4
+    items_per_page = 5
     start_index = (int(page) - 1) * items_per_page
     end_index = start_index + items_per_page
 
@@ -43,37 +46,36 @@ def load_more_data(request):
 
     return JsonResponse(data, safe=False)
 
-
-def result_view(request):
-    if request.method == 'POST':
-        q1_answer = request.POST.get('q1')
-        q2_answer = request.POST.get('q2')
-        q3_answer = request.POST.get('q3')
-
-        score = 0
-
-        # Оценка ответов
-        if q1_answer == 'a':
-            score += 1
-        if q2_answer == 'b':
-            score += 1
-        if q3_answer == 'c':
-            score += 1
-
-        # Определение результата
-        if score == 3:
-            result = "Отлично! Вы набрали максимальное количество очков!"
-            recommended_product = "Полезный товар A"
-        elif score == 2:
-            result = "Хорошо! Вы набрали большинство очков!"
-            recommended_product = "Полезный товар B"
-        else:
-            result = "Попробуйте еще раз. Вы набрали меньше очков."
-            recommended_product = "Полезный товар C"
-
-        return render(request, 'main_site/tests.html', {'result': result, 'recommended_product': recommended_product})
-
-    return render(request, 'main_site/tests.html')
-
 def actions(request):
     return render(request, 'main_site/stocks.html')
+
+
+def quiz_view(request, quiz_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
+    questions = Question.objects.filter(category=quiz)
+
+    if request.method == 'POST':
+        form = QuizForm(request.POST, questions=questions)
+        if form.is_valid():
+            qes_1, qes_2, qes_3 = 0, 0, 0
+            score = 0
+            for question in questions:
+                selected_answer_id = form.cleaned_data[f'question_{question.id}']
+                selected_answer = Answer.objects.get(pk=selected_answer_id)
+                if selected_answer.score_ans == 1:
+                    qes_1 += 1
+                if selected_answer.score_ans == 2:
+                    qes_2 += 1
+                if selected_answer.score_ans == 3:
+                    qes_3 += 1
+            if qes_1 >= 1 or qes_3 >= 1:
+                # Тут результат только с безопасными растениями
+                return redirect('catalog')
+            elif qes_2 > 1:
+                # Тут результат с любыми растениями
+                return redirect('home_page')
+
+    else:
+        form = QuizForm(questions=questions)
+
+    return render(request, 'main_site/test.html', {'quiz': quiz, 'form': form, 'questions': questions})

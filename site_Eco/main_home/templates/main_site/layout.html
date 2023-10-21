@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/static/main_site/assets/css/main.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 		<noscript><link rel="stylesheet" href="/static/main_site/assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="landing is-preload">
@@ -12,7 +13,24 @@
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
-				{% block header %}{% endblock %}
+				<header id="header">
+					<h1><a href="{% url 'home_page' %}">Eco4home</a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span>Меню</span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="{% url 'home_page' %}">Главная</a></li>
+											<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
+											<li><a href="{% url 'catalog' %}">Каталог</a></li>
+											<li><a href="{% url 'actions' %}">Товары дня</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+				</header>
 
 				{% block banner %}{% endblock %}
 
@@ -31,10 +49,10 @@
 						<ul class="actions stacked" >
 							<li></li>
 							<li></li>
-							<li><a href="../">Главная</a></li>
-							<li><a href="../tests">Тесты</a></li>
-							<li><a href="../catalog">Каталог</a></li>
-                    		<li><a href="../stocks">Товары дня</a></li>
+							<li><a href="{% url 'home_page' %}">Главная</a></li>
+							<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
+							<li><a href="{% url 'catalog' %}">Каталог</a></li>
+                    		<li><a href="{% url 'actions' %}">Товары дня</a></li>
 						</ul>
 						<ul class="actions stacked">
 							<li></li>
@@ -51,17 +69,17 @@
 									<form method="post" action="#">
 										<div class="row gtr-uniform">
 											<div class="col-6 col-12-xsmall">
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Имя" />
 											</div>
 											<div class="col-6 col-12-xsmall">
 												<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
 											</div>
 											<div class="col-12">
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="3" style="resize: none;"></textarea>
+												<textarea name="demo-message" id="demo-message" placeholder="Введите сообщение" rows="3" style="resize: none;"></textarea>
 											</div>
 											<div class="col-12">
-												<ul class="actions" style="margin-left: 0.5em">
-													<li><input type="submit" value="Send Message" class="primary" /></li>
+												<ul class="actions" style="margin-left: 1.25em">
+													<li><input type="submit" value="Отправить" class="primary" /></li>
 												</ul>
 											</div>
 										</div>

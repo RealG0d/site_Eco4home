@@ -1,0 +1,24 @@
+{% extends 'main_site/layout.html' %}
+
+{% block section_one %}
+<article id="main">
+	<header>
+		<h2>Generic Page</h2>
+		<p>Aliquam ut ex ut interdum donec amet imperdiet eleifend</p>
+	</header>
+	<section class="wrapper style5">
+		<div class="inner">
+			<form class="quiz-form" method="post">
+				{% csrf_token %}
+				<h1 style="color: black;">{{ quiz.category_name }}</h1>
+					{% for field in form %}
+						<img src="{{ field.field.img_bg.url }}">
+						{{ field.label_tag }}<br>
+						{{ field }}<br>
+					{% endfor %}
+				<input type="submit" value="Отправить">
+			</form>
+		</div>
+	</section>
+</article>
+{% endblock %}

@@ -1,26 +1,5 @@
 {% extends 'main_site/layout.html' %}
 
-{% block header %}
-<header id="header">
-	<h1><a href="">Eco4home</a></h1>
-	<nav id="nav">
-		<ul>
-			<li class="special">
-				<a href="#menu" class="menuToggle"><span>Меню</span></a>
-				<div id="menu">
-					<ul>
-						<li><a href="../">Главная</a></li>
-						<li><a href="">Тесты</a></li>
-						<li><a href="../catalog">Каталог</a></li>
-						<li><a href="../stocks">Товары дня</a></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
-	</nav>
-</header>
-{% endblock %}
-
 {% block section_one %}
 <article id="main">
 	<header>
@@ -29,58 +8,11 @@
 	</header>
 	<section class="wrapper style5">
 		<div class="inner">
-			<h1>Тест</h1>
-
-    {% if result %}
-        <h2>Результат:</h2>
-        <p>{{ result }}</p>
-        <p>Рекомендуемый товар: {{ recommended_product }}</p>
-    {% else %}
-        <form id="quiz-form" method="post" action="{% url 'result' %}">
-            {% csrf_token %}
-
-            <div id="questions-container">
-                <p class="question">Вопрос 1:</p>
-                <input type="radio" name="q1" value="a" class="answer"> Вариант ответа А<br>
-                <input type="radio" name="q1" value="b" class="answer"> Вариант ответа Б<br>
-                <input type="radio" name="q1" value="c" class="answer"> Вариант ответа В<br>
-            </div>
-
-            <input type="submit" value="Отправить">
-        </form>
-    {% endif %}
-
-    <script>
-        var quizForm = document.getElementById("quiz-form");
-var questionsContainer = document.getElementById("questions-container");
-
-// Обработчик события отправки формы
-quizForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Предотвращаем отправку формы
-
-    var selectedAnswer1 = document.querySelector('input[name="q1"]:checked');
-    var selectedAnswer2 = document.querySelector('input[name="q2"]:checked');
-
-    if (selectedAnswer1 && selectedAnswer2) {
-        // Получаем значения выбранных ответов
-        var answerValue1 = selectedAnswer1.value;
-        var answerValue2 = selectedAnswer2.value;
-
-        // Создаем новый вопрос
-        var newQuestion = document.createElement("div");
-        newQuestion.innerHTML = `
-            <p class="question">Вопрос 3:</p>
-            <input type="radio" name="q3" value="a" class="answer"> Вариант ответа А<br>
-            <input type="radio" name="q3" value="b" class="answer"> Вариант ответа Б<br>
-            <input type="radio" name="q3" value="c" class="answer"> Вариант ответа В<br>
-        `;
-
-        // Заменяем текущий вопрос на новый вопрос
-        questionsContainer.innerHTML = "";
-        questionsContainer.appendChild(newQuestion);
-    }
-});
-    </script>
+			{% for test in tests %}
+			<ul class="actions special">
+                <li><a href="{% url 'quiz_view' test.pk %}" class="button fit">{{ test }}</a></li>
+            </ul>
+			{% endfor %}
 		</div>
 	</section>
 </article>

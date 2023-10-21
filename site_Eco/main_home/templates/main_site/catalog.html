@@ -1,47 +1,26 @@
 {% extends 'main_site/layout.html' %}
 
-{% block header %}
-<header id="header">
-	<h1><a href="">Eco4home</a></h1>
-	<nav id="nav">
-		<ul>
-			<li class="special">
-				<a href="#menu" class="menuToggle"><span>Меню</span></a>
-				<div id="menu">
-					<ul>
-						<li><a href="../">Главная</a></li>
-						<li><a href="../tests">Тесты</a></li>
-						<li><a href="">Каталог</a></li>
-						<li><a href="../stocks">Товары дня</a></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
-	</nav>
-</header>
-{% endblock %}
-
 {% block section_one %}
 <article id="main">
 	<header>
 		<h2>Каталог товаров</h2>
 		<p>Тут вы можете выбрать домашние растения и аксессуары для них</p>
 	</header>
-	<section class="wrapper style5">
-		<div id="category-select">
-		  <select id="category">
-			<option value="all">Все категории</option>
-			<option value="Вид">Электроника</option>
-			<option value="Растеневидное">Одежда</option>
-			<option value="Обыкновенный кактус">Книги</option>
-		  </select>
-		</div>
+	<section class="wrapper style5" style="padding: 2em 0 4em 0">
+			<div id="category-select" style="padding: 0 0 2em 0">
+			  <select id="category" style="width: 30%; margin: 20px auto;">
+				<option value="all">Все категории</option>
+				<option value="Декоративно-лиственные растения">Декоративно-лиственные растения</option>
+				<option value="Красиво-цветущие растения">Красиво-цветущие растения</option>
+				<option value="Кактусы и суккуленты">Кактусы и суккуленты</option>
+			  </select>
+			</div>
 
 		<div id="products">
-		<div id='card' class="cards">
+		<div id='cards' class="cards">
 			{% for item in items %}
 			<div class="card" data-category="{{ item.type_plant }}">
-				<div class="card__top">
+				<div id="card-{{ item.name_plant }}" class="card__top">
 					<a href="#" class="card__image">
 						<img src="{{ item.img_plant.url }}" alt="{{ item.name_plant }}">
 					</a>

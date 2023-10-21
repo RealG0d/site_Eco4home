@@ -1890,74 +1890,6 @@ input, select, textarea {
 		padding: 0.75em 1em;
 	}
 
-	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
-	}
-
-		input[type="checkbox"] + label,
-		input[type="radio"] + label {
-			text-decoration: none;
-			color: #fff;
-			cursor: pointer;
-			display: inline-block;
-			font-size: 1em;
-			font-weight: 400;
-			padding-left: 2.4em;
-			padding-right: 0.75em;
-			position: relative;
-		}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				-moz-osx-font-smoothing: grayscale;
-				-webkit-font-smoothing: antialiased;
-				display: inline-block;
-				font-style: normal;
-				font-variant: normal;
-				text-rendering: auto;
-				line-height: 1;
-				text-transform: none !important;
-				font-family: 'Font Awesome 5 Free';
-				font-weight: 900;
-			}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				background: rgba(144, 144, 144, 0.25);
-				border-radius: 3px;
-				content: '';
-				display: inline-block;
-				font-size: 0.8em;
-				height: 2.0625em;
-				left: 0;
-				line-height: 2.0625em;
-				position: absolute;
-				text-align: center;
-				top: 0;
-				width: 2.0625em;
-			}
-
-		input[type="checkbox"]:checked + label:before,
-		input[type="radio"]:checked + label:before {
-			background: #2e3842;
-			color: #fff;
-			content: '\f00c';
-		}
-
-		input[type="checkbox"]:focus + label:before,
-		input[type="radio"]:focus + label:before {
-			box-shadow: 0 0 0 2px #21b2a6;
-		}
 
 	input[type="checkbox"] + label:before {
 		border-radius: 3px;
@@ -4130,7 +4062,7 @@ input, select, textarea {
         /* Автоматически заполняем на всю ширину grid-контейнера */
         grid-template-columns: repeat(auto-fill, 225px);
         width: 100%;
-        max-width: 1000px; /* Ширина grid-контейнера */
+        max-width: 1300px; /* Ширина grid-контейнера */
         justify-content: center;
         justify-items: center; /* Размещаем карточку по центру */
         column-gap: 30px; /* Отступ между колонками */
@@ -4148,6 +4080,7 @@ input, select, textarea {
         transition: 0.2s;
         position: relative;
     }
+
 
     /* При наведении на карточку - меняем цвет тени */
     .card:hover {
@@ -4205,7 +4138,8 @@ input, select, textarea {
 
 
     .card__prices {
-        display: flex;
+        display: block;
+        margin-top: auto;
         margin-bottom: 10px;
         flex: 0 0 0%; /* Размещаем цены равномерно в две колонки */
     }
@@ -4276,7 +4210,6 @@ input, select, textarea {
         border-radius: 4px;
         cursor: pointer; /* Меняем курсор при наведении */
         transition: 0.2s;
-        margin-top: auto; /* Прижимаем кнопку к низу карточки */
     }
 
     .card__add:hover {
@@ -4297,24 +4230,85 @@ input, select, textarea {
         width: auto; /* Задать ширину кнопки */
     }
 
-    /* Стили для вопросов */
-    .question {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
+/* Стили для тестов */
+
+.quiz-form {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.quiz-form img {
+    max-width: 100%;
+    max-height: 100px; /* Установите желаемую максимальную высоту */
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.quiz-form-radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quiz-form-radio input {
+    opacity: 1;
+    cursor: pointer;
+    appearance: auto;
+}
+
+.checkmark {
+     position: absolute;
+     top: 0;
+     left: 0;
+     height: 20px;
+     width: 20px;
+     background-color: #eee;
+     border-radius: 50%;
+   }
+
+   .quiz-form-radio input:checked ~ .checkmark {
+     background-color: #2196F3;
+   }
+
+   .checkmark:after {
+     content: "";
+     position: absolute;
+     display: none;
+   }
+
+   .quiz-form-radio input:checked ~ .checkmark:after {
+     display: block;
+   }
+
+   .quiz-form-radio .checkmark:after {
+     top: 6px;
+     left: 6px;
+     width: 8px;
+     height: 8px;
+     border-radius: 50%;
+     background: white;
+   }
+
+   .quiz-form-radio:checked {
+        animation: pulse 0.5s infinite;
     }
 
-    /* Стили для вариантов ответов */
-    .answer {
-        margin-bottom: 5px;
+   @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
-    /* Стили для радио-кнопок */
-    input[type="radio"] {
-        margin-right: 5px;
-    }
-
-    /* Стили для выделенных ответов */
-    .selected-answer {
-        background-color: #f2f2f2;
-    }
