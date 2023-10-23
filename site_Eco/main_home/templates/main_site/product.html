@@ -1,0 +1,22 @@
+{% extends 'main_site/layout.html' %}
+
+{% block section_one %}
+<article id="main">
+    <header></header>
+    <section class="wrapper style5" style="padding: 2em 0 4em 0">
+        <div class="product-details">
+            <h2 class="center__format rotate-text">{{ item.name_plant }}</h2>
+            <img src="{{ item.img_plant.url }}" alt="">
+            <div class="product-info">
+                <h3><strong>Цена товара:</strong> {{ item.price_plant }} ₽</h3>
+                {% if item.sale_plant != 0 %}
+                    <h3><strong>Скидка на товар: </strong>{{ item.sale_plant }}%</h3>
+                {% endif %}
+                <h3><strong>Описание товара:</strong></h3>
+                <p>{{ item.text_plant }}</p>
+            </div>
+        </div>
+        <a href="{% url 'catalog' %}" class="back-button">Вернуться в каталог</a>
+    </section>
+</article>
+{% endblock %}

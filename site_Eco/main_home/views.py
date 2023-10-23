@@ -90,3 +90,18 @@ def result_quiz(request, category):
         good_plants = Plant.objects.all()
 
     return render(request, 'main_site/result.html', {'good_plants': good_plants})
+
+
+def view_product(request, plant_id):
+    plant = Plant.objects.get(pk=plant_id)
+    context = {
+        'item': plant
+    }
+
+    session_key = request.session.session_key
+    if not session_key:
+        request.session['session_key'] = 123
+        request.session.cycle_key()
+        print(request.session.session_key)
+
+    return render(request, 'main_site/product.html', context=context)
