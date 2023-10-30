@@ -8,7 +8,14 @@ from django.http import JsonResponse
 
 
 def home(request):
-    return render(request, 'main_site/index.html')
+    plants = Plant.objects.all()
+    context = {
+        'items': plants
+    }
+    return render(request, 'main_site/index.html', context=context)
+
+def basket(request):
+    return render(request, 'main_site/basket.html')
 
 def tests(request):
     tests = Quiz.objects.all()

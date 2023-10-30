@@ -5,19 +5,31 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/static/main_site/assets/css/main.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 		<noscript><link rel="stylesheet" href="/static/main_site/assets/css/noscript.css" /></noscript>
 		<link rel="icon" href="/static/main_site/assets/css/images/favicon.ico" type="image/x-icon">
+		<style>
+			.fa {
+				font-size: 17px;
+				transition: color 0.5s;
+			}
+			.fa:hover {
+				color: green;
+				transform: scale(1.2);
+			}
+		</style>
 	</head>
 	<body class="landing is-preload">
 
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
-
 				<header id="header">
 					<h1><a href="{% url 'home_page' %}">Eco4home</a></h1>
 						<nav id="nav">
 							<ul>
+								<li><a href="#" id="show-popup"><i class="fa fa-user"></i></a></li>
+        						<li><a href="{% url 'basket' %}"><i class="fa fa-shopping-cart"></i></a></li>
 								<li class="special">
 									<a href="#menu" class="menuToggle"><span>Меню</span></a>
 									<div id="menu">
@@ -25,13 +37,27 @@
 											<li><a href="{% url 'home_page' %}">Главная</a></li>
 											<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
 											<li><a href="{% url 'catalog' %}">Каталог</a></li>
-											<li><a href="{% url 'actions' %}">Товары дня</a></li>
+											<li><a href="{% url 'actions' %}">Мастер-классы</a></li>
+											<li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
 										</ul>
 									</div>
 								</li>
 							</ul>
 						</nav>
 				</header>
+
+				<div class="overlay" id="overlay"></div>
+				<div class="popup" id="login-popup">
+					<span class="close" id="close-popup" style="color: black;">&times;</span>
+					<h2 style="color: black;">Авторизация</h2>
+					<form action="auth.php" method="post">
+						<label style="color: black;">Имя пользователя:</label>
+						<input type="text" name="username" required>
+						<label style="color: black;">Пароль:</label>
+						<input type="password" name="password" required>
+						<input style="color: black;" type="submit" value="Войти">
+					</form>
+				</div>
 
 				{% block banner %}{% endblock %}
 
@@ -53,17 +79,10 @@
 							<li><a href="{% url 'home_page' %}">Главная</a></li>
 							<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
 							<li><a href="{% url 'catalog' %}">Каталог</a></li>
-                    		<li><a href="{% url 'actions' %}">Товары дня</a></li>
+                    		<li><a href="{% url 'actions' %}">Мастер-классы</a></li>
+							<li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
 						</ul>
-						<ul class="actions stacked">
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li><a href="https://vk.com/filatov02" class="icon brands fa-vk" target="_blank"><span class="label"></span></a></li>
-							<li><a href="mailto:filatov_02@inbox.ry" class="icon solid fa-envelope" target="_blank"><span class="label"></span></a></li>
-							<li></li>
-						</ul>
+						<ul class="actions stacked"></ul>
 						<ul class="actions stacked">
 							<section>
 								<li>Свяжитесь с нами</li>
@@ -103,6 +122,16 @@
 			<script src="/static/main_site/assets/js/breakpoints.min.js"></script>
 			<script src="/static/main_site/assets/js/util.js"></script>
 			<script src="/static/main_site/assets/js/main.js"></script>
+			<script>
+				document.getElementById("show-popup").addEventListener("click", function() {
+					document.getElementById("overlay").style.display = "block";
+					document.getElementById("login-popup").style.display = "block";
+				});
 
+				document.getElementById("close-popup").addEventListener("click", function() {
+					document.getElementById("overlay").style.display = "none";
+					document.getElementById("login-popup").style.display = "none";
+				});
+			</script>
 	</body>
 </html>

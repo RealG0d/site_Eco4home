@@ -17,24 +17,30 @@
 <section id="one" class="wrapper style1 special">
     <div class="inner">
         <header class="major">
-            <h2>Почему нам стоит доверять</h2>
-            <ul class="beautiful">
-                <li class="icon solid fa-leaf">
-                    <p>Самый большой ассортимент в России</p>
-                </li>
-                <li class="icon solid fa-file">
-                    <p>Индивидуальный тест с подбором растения</p>
-                </li>
-                <li class="icon solid fa-film">
-                    <p>Интересные мастер-классы и видеоуроки</p>
-                </li>
-                <li class="icon solid fa-thumbs-up">
-                    <p>Тысячи довольных клиентов</p>
-                </li>
-            </ul>
+            <h2>Товары со скидкой</h2>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for item in items %}
+                    {% if item.sale_plant != 0 %}
+                    <div class="swiper-slide">
+                        <div class="swipper__card">
+                            <img src="{{ item.img_plant.url }}" alt="{{ item.name_plant }}">
+                            <div class="swipper__card-content">
+                                <h3>{{ item.name_plant }}</h3>
+                                <p>Скидка: {{ item.sale_plant }}%</p>
+                                <p>Цена со скидкой: {{ item.get_sale }} ₽</p>
+                                <button class="add-to-cart-button">В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         </header>
     </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 {% endblock %}
 
 {% block section_two %}
@@ -60,10 +66,10 @@
     </section>
     <section class="spotlight">
         <div class="image"><img src="static/main_site/img/pic3.jpg" alt="" /></div><div class="content">
-            <h2>Акционные товары</h2>
-            <p>В нашем магазине имеются специальные предложения на интересные виды домашних растений, взгляните.</p>
+            <h2>Мастер-классы</h2>
+            <p>На нашем сайте представлены интересные и познавательные мастер-классы в формате видеоуроков.</p>
             <ul class="actions special">
-                <li><a href="{% url 'actions' %}" class="button fit">Посмотреть скидки</a></li>
+                <li><a href="{% url 'actions' %}" class="button fit">Начать учиться</a></li>
             </ul>
         </div>
     </section>
@@ -119,5 +125,27 @@
         </ul>
     </div>
 </section>
+<script>
+var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 'auto',
+    slidesPerGroup: 1,
+    breakpoints: {
+        768: {
+            slidesPerView: 3,
+        },
+        1024: {
+            slidesPerView: 4,
+        },
+        1200: {
+            slidesPerView: 5,
+        },
+    },
+    spaceBetween: 3,  // Расстояние между карточками
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+});
+</script>
 {% endblock %}
 
