@@ -4400,6 +4400,7 @@ input, select, textarea {
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    height: 500px;
 }
 
     .swipper__card img {
@@ -4442,6 +4443,12 @@ input, select, textarea {
     .add-to-cart-button:hover {
         background-color: #e64a2e !important;
     }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: #ff5733 !important;
+    }
+
 
 /* Стили для формы авторизации */
 
