@@ -4400,7 +4400,7 @@ input, select, textarea {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: 550px;
 }
 
     .swipper__card img {

@@ -28,7 +28,8 @@
                             <div class="swipper__card-content">
                                 <h3>{{ item.name_plant }}</h3>
                                 <p>Скидка: {{ item.sale_plant }}%</p>
-                                <p>Цена со скидкой: {{ item.get_sale }} ₽</p>
+                                <p>Цена со скидкой: </br>
+                                    {{ item.get_sale }} ₽</p>
                                 <button class="add-to-cart-button">В корзину</button>
                             </div>
                         </div>
@@ -133,13 +134,13 @@ var swiper = new Swiper(".mySwiper", {
     slidesPerGroup: 1,
     breakpoints: {
         768: {
-            slidesPerView: 3,
+            slidesPerView: 2,
         },
         1024: {
-            slidesPerView: 4,
+            slidesPerView: 3,
         },
         1200: {
-            slidesPerView: 5,
+            slidesPerView: 4,
         },
     },
     spaceBetween: 3,  // Расстояние между карточками
