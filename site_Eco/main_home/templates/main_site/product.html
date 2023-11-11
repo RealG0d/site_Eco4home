@@ -8,9 +8,11 @@
             <h2 class="center__format rotate-text" style="font-size: 17px;">{{ item.name_plant }}</h2>
             <img src="{{ item.img_plant.url }}" alt="">
             <div class="product-info">
-                <h3 style="font-size: 17px;"><strong>Цена товара:</strong> {{ item.price_plant }} ₽</h3>
                 {% if item.sale_plant != 0 %}
+                    <h3 style="font-size: 17px;"><strong>Цена товара:</strong> {{ item.get_sale }} ₽</h3>
                     <h3 style="font-size: 17px;"><strong>Скидка на товар: </strong>{{ item.sale_plant }}%</h3>
+                {% else %}
+                    <h3 style="font-size: 17px;"><strong>Цена товара:</strong> {{ item.price_plant }} ₽</h3>
                 {% endif %}
                 <h3 style="font-size: 17px;"><strong>Описание товара:</strong></h3>
                 <p>{{ item.text_plant }}</p>
