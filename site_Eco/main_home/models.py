@@ -34,16 +34,19 @@ class Plant(models.Model):
         new_price = int(self.price_plant * (100 - self.sale_plant) / 100)
         return new_price
 
+
 class Quiz(models.Model):
     category_name = models.CharField(max_length=100, verbose_name='Категория')
 
     def __str__(self):
         return self.category_name
 
+
 class Question(models.Model):
     category = models.ForeignKey(Quiz,
                                  related_name='Test',
-                                 on_delete=models.CASCADE
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Категория',
                                  )
     question = models.CharField(max_length=200, verbose_name='Вопрос')
     img_bg = models.ImageField(blank=True, upload_to='media', verbose_name='Картинка для вопроса')

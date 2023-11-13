@@ -4,7 +4,6 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator
 from .forms import QuizForm
 
-from django.http import JsonResponse
 
 
 def home(request):
@@ -14,8 +13,10 @@ def home(request):
     }
     return render(request, 'main_site/index.html', context=context)
 
+
 def basket(request):
     return render(request, 'main_site/basket.html')
+
 
 def tests(request):
     tests = Quiz.objects.all()
@@ -24,34 +25,37 @@ def tests(request):
     }
     return render(request, 'main_site/tests.html', context=context)
 
-def catalog(request):
-    items = Plant.objects.all()
-    paginator = Paginator(items, 1)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    context = {
-        'items': items,
-        'page_obj': page_obj,
-    }
-    return render(request, 'main_site/catalog.html', context=context)
 
-class PlantsListView(ListView):
-    model = Plant
-    template_name = 'main_site/catalog.html'
-    context_object_name = 'items'
-    paginate_by = 5
+# def catalog(request):
+#     items = Plant.objects.all()
+#     paginator = Paginator(items, 1)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#     context = {
+#         'items': items,
+#         'page_obj': page_obj,
+#     }
+#     return render(request, 'main_site/catalog.html', context=context)
 
 
-def load_more_data(request):
-    page = request.GET.get('page', 1)
-    items_per_page = 5
-    start_index = (int(page) - 1) * items_per_page
-    end_index = start_index + items_per_page
+# class PlantsListView(ListView):
+#     model = Plant
+#     template_name = 'main_site/catalog.html'
+#     context_object_name = 'items'
+#     paginate_by = 5
 
-    queryset = Plant.objects.all()[start_index:end_index]
-    data = list(queryset.values())
 
-    return JsonResponse(data, safe=False)
+# def load_more_data(request):
+#     page = request.GET.get('page', 1)
+#     items_per_page = 5
+#     start_index = (int(page) - 1) * items_per_page
+#     end_index = start_index + items_per_page
+#
+#     queryset = Plant.objects.all()[start_index:end_index]
+#     data = list(queryset.values())
+#
+#     return JsonResponse(data, safe=False)
+
 
 def actions(request):
     return render(request, 'main_site/stocks.html')
@@ -88,6 +92,7 @@ def quiz_view(request, quiz_id):
 
     return render(request, 'main_site/test.html', {'quiz': quiz, 'form': form, 'questions': questions})
 
+
 def result_quiz(request, category):
     if category == 'Декоративно-лиственные растения':
         good_plants = Plant.objects.filter(type_plant=category)
@@ -99,16 +104,16 @@ def result_quiz(request, category):
     return render(request, 'main_site/result.html', {'good_plants': good_plants})
 
 
-def view_product(request, plant_id):
-    plant = Plant.objects.get(pk=plant_id)
-    context = {
-        'item': plant
-    }
-
-    session_key = request.session.session_key
-    if not session_key:
-        request.session['session_key'] = 123
-        request.session.cycle_key()
-        print(request.session.session_key)
-
-    return render(request, 'main_site/product.html', context=context)
+# def view_product(request, plant_id):
+#     plant = Plant.objects.get(pk=plant_id)
+#     context = {
+#         'item': plant
+#     }
+#
+#     session_key = request.session.session_key
+#     if not session_key:
+#         request.session['session_key'] = 123
+#         request.session.cycle_key()
+#         print(request.session.session_key)
+#
+#     return render(request, 'main_site/product.html', context=context)

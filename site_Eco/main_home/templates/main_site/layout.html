@@ -1,136 +1,151 @@
 <!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Eco4home | Зелёный дом</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/static/main_site/assets/css/main.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-		<noscript><link rel="stylesheet" href="/static/main_site/assets/css/noscript.css" /></noscript>
-		<link rel="icon" href="/static/main_site/assets/css/images/favicon.ico" type="image/x-icon">
-		<style>
-			.fa {
-				font-size: 17px;
-				transition: color 0.5s;
-			}
-			.fa:hover {
-				color: green;
-				transform: scale(1.2);
-			}
-		</style>
-	</head>
-	<body class="landing is-preload">
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Eco4home | Зелёный дом</title>
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
-				<header id="header">
-					<h1><a href="{% url 'home_page' %}">Eco4home</a></h1>
-						<nav id="nav">
-							<ul>
-								<li><a href="#" id="show-popup"><i class="fa fa-user"></i></a></li>
-        						<li><a href="{% url 'basket' %}"><i class="fa fa-shopping-cart"></i></a></li>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>Меню</span></a>
-									<div id="menu">
-										<ul>
-											<li><a href="{% url 'home_page' %}">Главная</a></li>
-											<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
-											<li><a href="{% url 'catalog' %}">Каталог</a></li>
-											<li><a href="{% url 'actions' %}">Мастер-классы</a></li>
-											<li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-				</header>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'main_site/assets/css/main.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
-				<div class="overlay" id="overlay"></div>
-				<div class="popup" id="login-popup">
-					<span class="close" id="close-popup" style="color: black;">&times;</span>
-					<h2 style="color: black;">Авторизация</h2>
-					<form action="auth.php" method="post">
-						<label style="color: black;">Имя пользователя:</label>
-						<input type="text" name="username" required>
-						<label style="color: black;">Пароль:</label>
-						<input type="password" name="password" required>
-					</form>
-				</div>
+    <!-- External JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-				{% block banner %}{% endblock %}
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'main_site/assets/css/images/favicon.ico' %}" type="image/x-icon">
 
-				{% block section_one %}{% endblock %}
+    <style>
+        .fa {
+            font-size: 17px;
+            transition: color 0.5s;
+        }
 
-				{% block section_two %}{% endblock %}
+        .fa:hover {
+            color: green;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
 
-				{% block section_three %}{% endblock %}
+<body class="landing is-preload">
+    <div id="page-wrapper">
+        <header id="header">
+            <h1><a href="{% url 'home_page' %}">Eco4home</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="#" id="show-popup"><i class="fa fa-user"></i></a></li>
+                    <li><a href="{% url 'basket' %}"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li class="special">
+                        <a href="#menu" class="menuToggle"><span>Меню</span></a>
+                        <div id="menu">
+                            <ul>
+                                <li><a href="{% url 'home_page' %}">Главная</a></li>
+                                <li><a href="{% url 'individual_tests' %}">Тесты</a></li>
+                                <li><a href="{% url 'catalog' %}">Каталог</a></li>
+                                <li><a href="{% url 'actions' %}">Мастер-классы</a></li>
+                                <li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
-				{% block CTA %}{% endblock %}
+        <div class="overlay" id="overlay"></div>
+        <div class="popup" id="login-popup">
+            <span class="close" id="close-popup" style="color: black;">&times;</span>
+            <h2 style="color: black;">Авторизация</h2>
+            <form action="auth.php" method="post">
+                {% csrf_token %}
+                <label style="color: black;">Имя пользователя:</label>
+                <input type="text" name="username" required>
+                <label style="color: black;">Пароль:</label>
+                <input type="password" name="password" required>
+                <input type="submit" value="Войти">
+            </form>
+        </div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section id="cta" class="wrapper style4" style="padding: 0">
-						<div class="inner">
-						<ul class="actions stacked" >
-							<li></li>
-							<li></li>
-							<li><a href="{% url 'home_page' %}">Главная</a></li>
-							<li><a href="{% url 'individual_tests' %}">Тесты</a></li>
-							<li><a href="{% url 'catalog' %}">Каталог</a></li>
-                    		<li><a href="{% url 'actions' %}">Мастер-классы</a></li>
-							<li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
-						</ul>
-						<ul class="actions stacked"></ul>
-						<ul class="actions stacked">
-							<section>
-								<li>Свяжитесь с нами!</li>
-									<form method="post" action="#">
-										<div class="row gtr-uniform">
-											<div class="col-6 col-12-xsmall">
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Имя" />
-											</div>
-											<div class="col-6 col-12-xsmall">
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
-											</div>
-											<div class="col-12">
-												<textarea name="demo-message" id="demo-message" placeholder="Введите сообщение" rows="3" style="resize: none;"></textarea>
-											</div>
-											<div class="col-12">
-												<ul class="actions" style="margin-left: 1.25em">
-													<li><input type="submit" value="Отправить" class="primary" /></li>
-												</ul>
-											</div>
-										</div>
-									</form>
-							</section>
-						</ul>
-						</div>
-						</section>
-						<ul class="copyright">
-							<li>&copy; Eco4home 2023</li><li>Все права защищены</li>
-						</ul>
-					</footer>
+        {% block banner %}{% endblock %}
+        {% block section_one %}{% endblock %}
+        {% block section_two %}{% endblock %}
+        {% block section_three %}{% endblock %}
+        {% block CTA %}{% endblock %}
 
-			</div>
+        <footer id="footer">
+            <section id="cta" class="wrapper style4" style="padding: 0">
+                <div class="inner">
+                    <ul class="actions stacked">
+                        <li></li>
+                        <li></li>
+                        <li><a href="{% url 'home_page' %}">Главная</a></li>
+                        <li><a href="{% url 'individual_tests' %}">Тесты</a></li>
+                        <li><a href="{% url 'catalog' %}">Каталог</a></li>
+                        <li><a href="{% url 'actions' %}">Мастер-классы</a></li>
+                        <li><a href="{% url 'actions' %}">Памятка по уходу</a></li>
+                    </ul>
+                    <ul class="actions stacked"></ul>
+                    <ul class="actions stacked">
+                        <section>
+                            <li>Свяжитесь с нами!</li>
+                            <form method="post" action="#">
+                                <div class="row gtr-uniform">
+                                    <div class="col-6 col-12-xsmall">
+                                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Имя" />
+                                    </div>
+                                    <div class="col-6 col-12-xsmall">
+                                        <input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="demo-message" id="demo-message" placeholder="Введите сообщение" rows="3" style="resize: none;"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <ul class="actions" style="margin-left: 1.25em">
+                                            <li><input type="submit" value="Отправить" class="primary" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </ul>
+                </div>
+            </section>
+            <ul class="copyright">
+                <li>&copy; Eco4home 2023</li><li>Все права защищены</li>
+            </ul>
+        </footer>
+    </div>
 
-			<script src="/static/main_site/assets/js/jquery.min.js"></script>
-			<script src="/static/main_site/assets/js/jquery.scrollex.min.js"></script>
-			<script src="/static/main_site/assets/js/jquery.scrolly.min.js"></script>
-			<script src="/static/main_site/assets/js/browser.min.js"></script>
-			<script src="/static/main_site/assets/js/breakpoints.min.js"></script>
-			<script src="/static/main_site/assets/js/util.js"></script>
-			<script src="/static/main_site/assets/js/main.js"></script>
-			<script>
-				document.getElementById("show-popup").addEventListener("click", function() {
-					document.getElementById("overlay").style.display = "block";
-					document.getElementById("login-popup").style.display = "block";
-				});
+    <!-- External JavaScript -->
+    <script src="{% static 'main_site/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/jquery.scrollex.min.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/jquery.scrolly.min.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/util.js' %}"></script>
+    <script src="{% static 'main_site/assets/js/main.js' %}"></script>
+    <script>
+        document.getElementById("show-popup").addEventListener("click", function() {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("login-popup").style.display = "block";
+        });
 
-				document.getElementById("close-popup").addEventListener("click", function() {
-					document.getElementById("overlay").style.display = "none";
-					document.getElementById("login-popup").style.display = "none";
-				});
-			</script>
-	</body>
+        document.getElementById("close-popup").addEventListener("click", function() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("login-popup").style.display = "none";
+		        });
+
+        // Закрываем попап при клике вне его области
+        window.onclick = function(event) {
+            var overlay = document.getElementById("overlay");
+            var loginPopup = document.getElementById("login-popup");
+
+            if (event.target === overlay) {
+                overlay.style.display = "none";
+                loginPopup.style.display = "none";
+            }
+        };
+    </script>
+</body>
 </html>
