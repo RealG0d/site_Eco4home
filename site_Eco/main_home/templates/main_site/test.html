@@ -3,18 +3,78 @@
 {% block section_one %}
 <article id="main">
 	<section class="wrapper style5">
-		<div class="inner">
+		<h1 style="color: black; text-align: center;">{{ quiz.category_name }}</h1>
+		<div id="test" class="inner">
 			<form class="quiz-form" method="post">
 				{% csrf_token %}
-				<h1 style="color: black;">{{ quiz.category_name }}</h1>
 					{% for field in form %}
-						<img src="{{ field.field.img_bg.url }}">
-						{{ field.label_tag }}<br>
-						{{ field }}<br>
+						<div class="quiz-question" style="display: {% if forloop.first %}block{% else %}none{% endif %}">
+							<img src="{{ field.field.img_bg.url }}">
+							{{ field.label_tag }}<br>
+							{{ field }}<br>
+						</div>
 					{% endfor %}
-				<input type="submit" value="Отправить">
+				<div style="text-align: center;">
+					<button type="button" id="prevButton" style="display: none;">Назад</button>
+					<button type="button" id="nextButton">Далее</button>
+					<button type="submit" id="submitButton" style="display: none;">Отправить</button>
+				</div>
 			</form>
 		</div>
 	</section>
 </article>
+{% endblock %}
+
+{% block section_two %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.querySelector(".quiz-form");
+  const questions = form.querySelectorAll(".quiz-question");
+  let currentQuestionIndex = 0;
+  const nextButton = document.getElementById("nextButton");
+  const prevButton = document.getElementById("prevButton");
+  const submitButton = document.getElementById("submitButton");
+
+  // Обновить отображение кнопок при изменении текущего вопроса
+  function updateButtonDisplay() {
+    if (currentQuestionIndex === 0) {
+      prevButton.style.display = "none"; // Скрыть кнопку "Назад" на первом вопросе
+    } else {
+      prevButton.style.display = "inline"; // Показать кнопку "Назад" на всех остальных вопросах
+    }
+
+    if (currentQuestionIndex === questions.length - 1) {
+      nextButton.style.display = "none"; // Скрыть кнопку "Далее" на последнем вопросе
+      submitButton.style.display = "inline"; // Показать кнопку "Отправить" на последнем вопросе
+    } else {
+      nextButton.style.display = "inline"; // Показать кнопку "Далее" на всех остальных вопросах
+      submitButton.style.display = "none"; // Скрыть кнопку "Отправить" на всех остальных вопросах
+    }
+  }
+
+  // Добавить обработчик событий для кнопки "Далее"
+  nextButton.addEventListener("click", function() {
+    if (currentQuestionIndex < questions.length - 1) {
+      questions[currentQuestionIndex].style.display = "none"; // Скрыть текущий вопрос
+      currentQuestionIndex++; // Перейти к следующему вопросу
+      questions[currentQuestionIndex].style.display = "block"; // Показать следующий вопрос
+      updateButtonDisplay(); // Обновить отображение кнопок
+    }
+  });
+
+  // Добавить обработчик событий для кнопки "Назад"
+  prevButton.addEventListener("click", function() {
+    if (currentQuestionIndex > 0) {
+      questions[currentQuestionIndex].style.display = "none"; // Скрыть текущий вопрос
+      currentQuestionIndex--; // Перейти к предыдущему вопросу
+      questions[currentQuestionIndex].style.display = "block"; // Показать предыдущий вопрос
+      updateButtonDisplay(); // Обновить отображение кнопок
+    }
+  });
+
+  // Показать первый вопрос и обновить отображение кнопок
+  questions[currentQuestionIndex].style.display = "block";
+  updateButtonDisplay();
+});
+</script>
 {% endblock %}

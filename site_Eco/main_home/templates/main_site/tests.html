@@ -1,4 +1,5 @@
 {% extends 'main_site/layout.html' %}
+{% load static %}
 
 {% block section_one %}
 <article id="main">
@@ -7,12 +8,20 @@
 		<p>Проходите созданные нашей командой тесты и мы подберём для вас лучшие варианты!</p>
 	</header>
 	<section class="wrapper style5">
-		<div class="inner">
-			{% for test in tests %}
-			<ul class="actions special">
-                <li><a href="{% url 'quiz_view' test.pk %}" class="button fit">{{ test }}</a></li>
-            </ul>
-			{% endfor %}
+		<div id="tests" class="inner">
+			<ul class="test-list">
+                {% for test in tests %}
+				<li class="test-item">
+					<div class="test-info" style="background-image: url('/static/main_site/img/pic1.jpg');">
+						<div class="test-content">
+							<h3 style="color: #fff">{{ test }}</h3>
+							<p>Пример описания теста</p>
+							<a href="{% url 'quiz_view' test.pk %}" class="test-link">Пройти тест</a>
+						</div>
+					</div>
+            	</li>
+            	{% endfor %}
+			</ul>
 		</div>
 	</section>
 </article>

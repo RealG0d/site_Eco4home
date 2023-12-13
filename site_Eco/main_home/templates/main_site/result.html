@@ -15,7 +15,7 @@
 				{% for plant in good_plants %}
 				<div class="card" data-category="{{ plant.type_plant }}">
 					<div id="card-{{ plant.name_plant }}" class="card__top">
-						<a href="#" class="card__image">
+						<a href="{% url 'product' plant.id %}" class="card__image">
 							<img src="{{ plant.img_plant.url }}" alt="{{ plant.name_plant }}">
 						</a>
 						{% if plant.sale_plant != 0 %}
@@ -23,7 +23,7 @@
 						{% endif %}
 					</div>
 					<div class="card__bottom">
-						<a href="#" class="card__title">
+						<a href="{% url 'product' plant.id %}" class="card__title">
 							{{ plant.name_plant }}
 						</a>
 						<h7>{{ plant.type_plant }}</h7>
